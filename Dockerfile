@@ -6,12 +6,12 @@ ENV NPM_CONFIG_LOGLEVEL warn
 RUN npm install pm2 -g
 RUN apk add -U bash
 
-VOLUME ["/app"]
+VOLUME ["/srv"]
 
 # Expose ports
 EXPOSE 3000-3200
 
-WORKDIR /app
+WORKDIR /srv
 
 COPY run.sh /run.sh
 # Show current folder structure in logs

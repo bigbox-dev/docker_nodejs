@@ -1,12 +1,12 @@
 #!/bin/bash
 
-domains=$(ls /app/www/ | xargs -n1)  && \
+domains=$(ls /srv/www/ | xargs -n1)  && \
 echo "domains=$domains"  && \
 start=$(for domain in $domains; do
   echo "domain=$domain"
-  port=$(sed "s/^0*//" /app/www/$domain/current_build/frontend/frontend.port)
+  port=$(sed "s/^0*//" /srv/www/$domain/frontend.port)
   echo "$port"
-  cd /app/www/$domain/current_build/frontend
+  cd /srv/www/$domain/builds/current/frontend
   PORT=$port pm2 start server.js  --name "$domain"
 done)
 
