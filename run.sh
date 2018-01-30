@@ -1,17 +1,21 @@
 #!/bin/bash
 
+echo "apps:" > /process.yml
+
 domains=$(ls /srv/www/ | xargs -n1)  && \
-echo "domains=$domains"  && \
-start=$(for domain in $domains; do
-  echo "domain=$domain"
-  port=$(sed "s/^0*//" /srv/www/$domain/frontend.port)
-  echo "$port"
-  cd /srv/www/$domain/builds/current/frontend
-  PORT=$port pm2 start server.js  --name "$domain"
-done)
-
-echo "$start"
-
-while true; do
-sleep 10
+for domain in $domains; do
+  if [[ "$domain" == *bigbox.by* ]];
+  then
+    port=$(sed "s/^0*//" /srv/www/$domain/frontend.port)
+    echo "  - script: /srv/www/$domain/builds/current/reactjs/server.js" >> /process.yml
+    echo "    name: $domain" >> /process.yml
+    echo "    env:" >> /process.yml
+    echo "       PORT: $port" >> /process.yml
+  fi
 done
+
+pm2 start --no-daemon /process.yml
+
+
+
+
