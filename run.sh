@@ -10,6 +10,7 @@ for domain in $domains; do
     port=$(sed "s/^0*//" /srv/www/$domain/frontend.port)
     echo "  - script: /srv/www/$domain/builds/current/reactjs/server.js" >> /process.yml
     echo "    name: $domain" >> /process.yml
+    echo "    cwd: /srv/www/$domain/builds/current/reactjs" >> /process.yml
     echo "    env:" >> /process.yml
     echo "       PORT: $port" >> /process.yml
   fi
