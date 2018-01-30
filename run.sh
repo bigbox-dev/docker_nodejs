@@ -3,7 +3,7 @@
 echo "apps:" > /process.yml
 
 domains=$(ls /srv/www/ | xargs -n1)  && \
-<<<<<<< HEAD
+
 for domain in $domains; do
   if [[ "$domain" == *bigbox.by* ]];
   then
